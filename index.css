@@ -26,3 +26,41 @@ body {
 .header__title {
   font-weight: 375;
 }
+
+.ingredient__form {
+  display: flex;
+  justify-content: center;
+  margin: 4.375rem 2.1875rem 4rem;
+  column-gap: 0.75rem;
+}
+
+.ingredient__input {
+  width: 400px;
+  padding: 9px 13px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  flex-grow: 1;
+  min-width: 150px;
+  max-width: 400px;
+  font-size: 0.875rem;
+}
+
+.ingredient__button {
+  font-family: Inter, sans-serif;
+  border: none;
+  width: 183px;
+  background-color: #141413;
+  color: #fafaf8;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  padding: 9px 17px;
+  cursor: pointer;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  text-wrap: nowrap;
+}
+
+.ingredient__button::before {
+  content: "+";
+  margin-right: 5px;
+}
