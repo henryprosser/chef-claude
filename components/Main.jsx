@@ -1,16 +1,12 @@
 import { useState } from "react";
 import IngredientsList from "./IngredientsList";
 import ClaudeRecipe from "./ClaudeRecipe";
+import { getRecipeFromChefClaude, getRecipeFromMistral } from "../ai";
 
 export default function Main() {
-  const [ingredients, setIngredients] = useState([
-    "all the main spices",
-    "pasta",
-    "ground beef",
-    "tomato paste",
-  ]);
+  const [ingredients, setIngredients] = useState([]);
 
-  const [recipeShown, setRecipeShown] = useState(false);
+  const [recipe, setRecipe] = useState("");
 
   function addIngredient(formData) {
     const newIngredient = formData.get("ingredient");
@@ -18,8 +14,15 @@ export default function Main() {
     setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
   }
 
-  function toggleRecipeShown() {
-    setRecipeShown((prevShown) => !prevShown);
+  async function getRecipe() {
+    try {
+      //   const recipeMarkdown = await getRecipeFromMistral(ingredients);
+      const recipeMarkdown = await getRecipeFromChefClaude(ingredients);
+      //   console.log(recipeMarkdown); // Log the raw markdown to ensure it's received
+      setRecipe(recipeMarkdown); // Set the recipe state with the raw markdown
+    } catch (err) {
+      console.error("Error fetching recipe:", err);
+    }
   }
 
   return (
@@ -35,12 +38,9 @@ export default function Main() {
         <button className="ingredient__button">Add ingredient</button>
       </form>
       {ingredients.length > 0 && (
-        <IngredientsList
-          ingredients={ingredients}
-          toggleRecipeShown={toggleRecipeShown}
-        />
+        <IngredientsList ingredients={ingredients} getRecipe={getRecipe} />
       )}
-      {recipeShown && <ClaudeRecipe />}
+      {recipe && <ClaudeRecipe recipe={recipe} />}
     </main>
   );
 }

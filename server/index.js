@@ -16,7 +16,7 @@ You are an assistant that receives a list of ingredients that a user has and sug
 
 // Anthropic API setup
 const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY, // Use environment variable for key
+  apiKey: process.env.ANTHROPIC_API_KEY,
   dangerouslyAllowBrowser: false,
 });
 
@@ -40,9 +40,10 @@ app.post("/api/recipe/claude", async (req, res) => {
       ],
     });
     // Return markdown directly
-    res.send(msg.content[0].text); // Sending markdown directly
+    const recipe = msg.content[0].text || "No recipe generated";
+    res.send(recipe); // Send back the recipe
   } catch (err) {
-    console.error(err);
+    console.error("Error fetching from Claude:", err); // Log the error
     res.status(500).send("Error fetching from Claude");
   }
 });
@@ -66,14 +67,11 @@ app.post("/api/recipe/mistral", async (req, res) => {
       ],
     });
 
-    console.log("Response from Mistral:", response); // Log the full response
-
-    // Extract the generated text from the response object
     const recipe =
       response.choices[0]?.message?.content || "No recipe generated";
     res.send(recipe); // Send back the recipe
   } catch (err) {
-    console.error("Error fetching from Mistral:", err); // Log the full error stack
+    console.error("Error fetching from Mistral:", err); // Log the error
     res.status(500).send("Error fetching from Mistral");
   }
 });
