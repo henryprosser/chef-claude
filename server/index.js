@@ -4,7 +4,7 @@ const Anthropic = require("@anthropic-ai/sdk");
 const { HfInference } = require("@huggingface/inference");
 const app = express();
 
-// Enable CORS for all origins (you can restrict it to your frontend later)
+// Enable CORS for all origins (you can restrict it to frontend later)
 app.use(cors());
 app.use(express.json());
 
