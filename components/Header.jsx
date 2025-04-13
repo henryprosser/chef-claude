@@ -2,7 +2,7 @@ export default function Header() {
   return (
     <header className="header">
       <img
-        src="../images/chef-claude-icon.png"
+        src="/images/chef-claude-icon.png"
         className="header__icon"
         alt="chef claude"
       />
