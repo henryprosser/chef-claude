@@ -31,12 +31,15 @@ export default function Main() {
   }
 
   async function getRecipe() {
+    setLoading(true);
     try {
-      //   const recipeMarkdown = await getRecipeFromMistral(ingredients);
+      // const recipeMarkdown = await getRecipeFromMistral(ingredients);
       const recipeMarkdown = await getRecipeFromChefClaude(ingredients);
       setRecipe(recipeMarkdown); // Set the recipe state with the raw markdown
     } catch (err) {
       console.error("Error fetching recipe:", err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -61,6 +64,7 @@ export default function Main() {
           ref={recipeSection}
           ingredients={ingredients}
           getRecipe={getRecipe}
+          loading={loading}
         />
       )}
       {recipe && <ClaudeRecipe recipe={recipe} />}
